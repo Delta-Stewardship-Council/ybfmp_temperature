@@ -1,5 +1,4 @@
-# library
-require(dplyr)
+# get rstr ybfmp water temperature data
 
 # meta data provided by DWR:
 #WHO
