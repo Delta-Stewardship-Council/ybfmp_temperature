@@ -101,7 +101,7 @@ f_get_rstr <- function()
 
   # combine
     rstr_98_18 <- rbind(rstr_98_13, rstr_14, rstr_2015, rstr_2016, rstr_2017, rstr_2018)
-    write.csv(rstr_98_18, "data_clean/rstr_98_18.csv")
+    write.csv(rstr_98_18, "data_clean/rstr_98_18.csv", row.names = FALSE)
   }
 
 

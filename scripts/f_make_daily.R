@@ -61,6 +61,6 @@ f_make_daily <- function()
     rstr_daily_final$max <- ifelse(rstr_daily_final$method == "daily_mean", "NA", rstr_daily_final$max)
     rstr_daily_final$min <- ifelse(rstr_daily_final$method == "daily_mean", "NA", rstr_daily_final$min)
 
-    write.csv(rstr_daily_final, "data_clean/rstr_98_18_daily_logger.csv")
+    write.csv(rstr_daily_final, "data_clean/rstr_98_18_daily_logger.csv", row.names = FALSE)
 }
 
