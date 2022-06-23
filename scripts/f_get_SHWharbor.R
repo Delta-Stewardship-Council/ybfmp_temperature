@@ -111,7 +111,7 @@ f_get_SHWharbor <- function()
 
     hist(shw_98_20$water_temp)
 
-    write.csv(shw_98_20, "data_clean/shw_98_18.csv", row.names = FALSE)
+    write.csv(shw_98_20, "data_clean/shw_98_20.csv", row.names = FALSE)
 
 }
 
