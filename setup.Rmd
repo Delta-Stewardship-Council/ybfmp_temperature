@@ -1,0 +1,36 @@
+---
+title: "setup"
+author: "Pascale Goertler"
+date: '2022-06-24'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## f_get
+
+This is an R Markdown document detailing the data and scripts within the Yolo Bypass Fish Moniroting Program (YBFMP) water temperature repo. 
+
+Within the data_clean folder, the raw (years combined) temperature logger data from the Yolo Bypass rotary screw trap and Sherwood Harbor locations is rstr_98_18.csv and shw_98_20.csv, respectively. Those data are made into daily QC'ed datasets - rstr_98_18_daily_logger.csv and SHWharbor_98_20_daily_logger.csv.
+
+The f_get functions bring in the raw data from the data_raw folder and relevant EDI publications.
+
+```{r cars}
+summary(cars)
+```
+
+## f_make
+
+The f_make functions impute missing dates of water temperature data when consecutive missing days are less than or equal to one week (seven days). Otherwise a linear model is used to estimate water temperature on days when data gaps are larger than seven days.
+
+For the Yolo Bypass, the water temperature collected during fish sampling is incorporated into the water temperature time series before imputation. 
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+## clean data
+
+Each clean_ dataset incudes columns date, mean, max, min, sd, cv, n, method, category and site. 
