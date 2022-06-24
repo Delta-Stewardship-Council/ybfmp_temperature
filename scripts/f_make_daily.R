@@ -9,9 +9,6 @@ f_make_daily <- function()
     rstr_98_18 <- read.csv("data_clean/rstr_98_18.csv")
     rstr_98_18$date <- as.Date(rstr_98_18$date)
 
-  # get rid of row numbers
-    rstr_98_18 <- rstr_98_18[,-1]
-
   # check for duplicates
     rstr_98_18_dup <- rstr_98_18[!duplicated(rstr_98_18), ] # 91566 duplicates
 
@@ -55,7 +52,7 @@ f_make_daily <- function()
   # add data description columns
     rstr_daily_final <- transform(rstr_daily_final, method = ifelse(n > 1, "ybfmp_logger", "daily_mean"))
     rstr_daily_final$category <- "data"
-    rstr_daily_final$site <- "yb"
+    rstr_daily_final$site <- "STTD"
 
   # need to pull out max and min that doesn't apply
     rstr_daily_final$max <- ifelse(rstr_daily_final$method == "daily_mean", "NA", rstr_daily_final$max)
