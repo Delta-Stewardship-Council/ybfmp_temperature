@@ -68,7 +68,7 @@ f_get_WQ_w_fish <- function()
 
     WQ_w_fish_final <- merge(WQ_w_fish_final, stations, by = "date", all.x = TRUE)
 
-    write.csv(rstr_daily_final, "data_clean/WQ_w_fish_daily.csv", row.names = FALSE)
+    write.csv(WQ_w_fish_final, "data_clean/WQ_w_fish_daily.csv", row.names = FALSE)
 
 
 }
