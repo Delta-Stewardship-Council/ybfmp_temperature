@@ -90,6 +90,7 @@ f_get_hourly <- function() {
     fit_lis_max <- lm(yb_max~max, data = lis_input)# Adjusted R-squared: 0.7838
     fit_lis_min <- lm(yb_min~min, data = lis_input)# Adjusted R-squared: 0.7958
 
+    lis_input <- merge(input, lis[,c(2:5)], by = "date", all = TRUE) # can't have na.omit for this step
     lis_fill <- lis_input %>%
       mutate(pred_mean = predict(fit_lis_mean, .), pred_max = predict(fit_lis_max, .), pred_min = predict(fit_lis_min, .))
 
@@ -102,12 +103,46 @@ f_get_hourly <- function() {
     imput_dat_Over7 <- merge(imput_yb, lis_fill[,c(1,8:10)], by = "date", all = TRUE)
 
     imput_dat_Over7$method <- ifelse(is.na(imput_dat_Over7$mean) & !is.na(imput_dat_Over7$pred_mean), "lm_lis", imput_dat_Over7$method)
-    length(is.na(imput_dat_Over7$mean)) # 8020
 
     imput_dat_Over7$mean <- ifelse(is.na(imput_dat_Over7$mean), imput_dat_Over7$pred_mean, imput_dat_Over7$mean)
     imput_dat_Over7$max <- ifelse(is.na(imput_dat_Over7$max), imput_dat_Over7$pred_max, imput_dat_Over7$max)
     imput_dat_Over7$min <- ifelse(is.na(imput_dat_Over7$min), imput_dat_Over7$pred_min, imput_dat_Over7$min)
 
+    # remaining dates need other data source - rv
+
+    colnames(rv)[2] <- "date"
+    rv$date <- as.Date(rv$date)
+    rv_input <- merge(input, rv[,c(2:5)], by = "date", all = TRUE)
+    rv_input <- na.omit(rv_input)
+
+    fit_rv_mean <- lm(yb_mean~mean, data = rv_input)# Adjusted R-squared:  0.8106
+    fit_rv_max <- lm(yb_max~max, data = rv_input)# Adjusted R-squared: 0.8072
+    fit_rv_min <- lm(yb_min~min, data = rv_input)# Adjusted R-squared: 0.7983
+
+  # remaining NAs
+    input_rv <- subset(imput_dat_Over7, is.na(mean))
+    input_rv <- input_rv[,c(1,3:5)]
+    colnames(input_rv) <- c("date", "yb_mean", "yb_max", "yb_min")
+
+    rv_input <- merge(input_rv, rv[,c(2:5)], by = "date", all = TRUE)
+
+    rv_fill <- rv_input %>%
+      mutate(pred_mean = predict(fit_rv_mean, .), pred_max = predict(fit_rv_max, .), pred_min = predict(fit_rv_min, .))
+
+  # add predictions
+    imput_dat_Over7 <- imput_dat_Over7[,-c(13:15)]
+    imput_dat_Over7_rv <- merge(imput_dat_Over7, rv_fill[,c(1,8:10)], by = "date", all = TRUE)
+
+    imput_dat_Over7_rv$method <- ifelse(is.na(imput_dat_Over7_rv$mean) & !is.na(imput_dat_Over7_rv$pred_mean), "lm_rv", imput_dat_Over7_rv$method)
+
+    imput_dat_Over7_rv$mean <- ifelse(is.na(imput_dat_Over7_rv$mean), imput_dat_Over7_rv$pred_mean, imput_dat_Over7_rv$mean)
+    imput_dat_Over7_rv$max <- ifelse(is.na(imput_dat_Over7_rv$max), imput_dat_Over7_rv$pred_max, imput_dat_Over7_rv$max)
+    imput_dat_Over7_rv$min <- ifelse(is.na(imput_dat_Over7_rv$min), imput_dat_Over7_rv$pred_min, imput_dat_Over7_rv$min)
+
+
+    sum(is.na(imput_dat_Over7_rv$mean)) # still 188
+
+    write.csv(imput_dat_Over7_rv[,c(1:10,12)], "data_clean/clean_yb.csv", row.names = FALSE)
     }
 
 
