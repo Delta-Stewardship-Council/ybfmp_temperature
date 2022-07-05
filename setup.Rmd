@@ -7,18 +7,36 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+
 ```
 
 ## f_get
 
-This is an R Markdown document detailing the data and scripts within the Yolo Bypass Fish Moniroting Program (YBFMP) water temperature repo. 
+This is an R Markdown document detailing the data and scripts within the Yolo Bypass Fish Monitoring Program (YBFMP) water temperature repo. 
 
 Within the data_clean folder, the raw (years combined) temperature logger data from the Yolo Bypass rotary screw trap and Sherwood Harbor locations is rstr_98_18.csv and shw_98_20.csv, respectively. Those data are made into daily QC'ed datasets - rstr_98_18_daily_logger.csv and SHWharbor_98_20_daily_logger.csv.
 
-The f_get functions bring in the raw data from the data_raw folder and relevant EDI publications.
+The f_get functions bring in the raw data from the data_raw folder and relevant EDI publications. The clean_ data is the final daily water temperature data for each location.
 
-```{r cars}
-summary(cars)
+```{r data}
+lis <- read.csv("data_clean/clean_lis.csv") # lisbon weir
+rv <- read.csv("data_clean/clean_rv.csv") # rio vista
+shw <- read.csv("data_clean/clean_shw.csv") # sherwood harbor
+yb <- read.csv("data_clean/clean_yb.csv") # yolo bypass
+
+# integrated data published on EDI ()
+colnames(rv)[2] <- "date"
+
+rv$region <- "river_downstream"
+shw$region <- "river_upstream"
+yb$region <- "floodplain_bypass"
+
+integrated_data <- rbind(rv, shw, yb)
+integrated_data <- integrated_data[,-1] # group is not needed
+integrated_data$date <- as.Date(integrated_data$date)
+
 ```
 
 ## f_make
@@ -27,10 +45,55 @@ The f_make functions impute missing dates of water temperature data when consecu
 
 For the Yolo Bypass, the water temperature collected during fish sampling is incorporated into the water temperature time series before imputation. 
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r f_make, echo=FALSE}
+
+integrated_data %>%
+  group_by(region, method) %>%
+  summarise_each(funs(n = sum(!is.na(.))))
+
 ```
 
 ## clean data
 
-Each clean_ dataset incudes columns date, mean, max, min, sd, cv, n, method, category and site. 
+Each clean_ data set includes columns date, mean, max, min, sd, cv, n, method, category, length and site. 
+
+```{r f_clean, echo=FALSE}
+# the combined data set published on EDI includes a "region" variable because sites of water temperature collection vary for some locations (yb and rv)
+
+unique(integrated_data$site) # see Yolo Bypass Fish Monitoring Program data for site locations (f_get_WQ_w_fish.R in scripts folder)
+integrated_data %>%
+  mutate(year = format(date, "%Y")) %>%
+  group_by(site, year) %>%
+  summarise(total = sum(!is.na(date)))
+
+
+# method and category are linked because data gaps less than or equal to seven consecutive days were imputed, while larger gaps were estimated by a linear regression. The remaining 498 days were previous to the installation of the Rio Vista CDEC station.
+
+# data sources vary, daily means (daily_mean) were provided for 1998 at the Yolo Bypass and Sherwood Harbor, Yolo Bypass Fish Monitoring Program's temperature logger data was summarized in this repository (ybfmp_logger) and published data from Pien et al. 2020 (Pien_2020) and Pien and Kwan 2022 (WQ_w_fish) were also incorporated.
+
+integrated_data %>%
+  group_by(category, method) %>%
+  summarise_each(funs(n = sum(!is.na(.))))
+
+# length is the number of consecutive days of missing data that was imputed or predicted 
+plot_data <- integrated_data %>%
+  mutate(year = format(date, "%Y")) %>%
+  group_by(region, year) %>%
+  summarise(mean = mean(length, na.rm = TRUE), max = max(length, na.rm = TRUE), min = min(length, na.rm = TRUE))
+
+region <- c("floodplain_bypass", "river_downstream", "river_upstream")
+color <- c("#3cb44b", "#911eb4", "#000075")
+
+col <- data.frame(region, color)
+plot_data <- merge(plot_data, col, by ="region")
+
+plot(plot_data$year, plot_data$max, 
+     col = plot_data$color,
+     cex = 1.5, 
+     pch = 16,
+     xlab = "Year",
+     ylab = "Max length",
+     main = "Max consecutive missing dates per Year")
+legend("topright", c("river_upstream", "floodplain_bypass", "river_downstream"), col = c("#000075", "#3cb44b", "#911eb4"), pch = 16)
+
+```

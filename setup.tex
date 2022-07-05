@@ -1,0 +1,604 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={setup},
+  pdfauthor={Pascale Goertler},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{setup}
+\author{Pascale Goertler}
+\date{2022-06-24}
+
+\begin{document}
+\maketitle
+
+\hypertarget{f_get}{%
+\subsection{f\_get}\label{f_get}}
+
+This is an R Markdown document detailing the data and scripts within the
+Yolo Bypass Fish Monitoring Program (YBFMP) water temperature repo.
+
+Within the data\_clean folder, the raw (years combined) temperature
+logger data from the Yolo Bypass rotary screw trap and Sherwood Harbor
+locations is rstr\_98\_18.csv and shw\_98\_20.csv, respectively. Those
+data are made into daily QC'ed datasets -
+rstr\_98\_18\_daily\_logger.csv and
+SHWharbor\_98\_20\_daily\_logger.csv.
+
+The f\_get functions bring in the raw data from the data\_raw folder and
+relevant EDI publications. The clean\_ data is the final daily water
+temperature data for each location.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lis }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data\_clean/clean\_lis.csv"}\NormalTok{) }\CommentTok{\# lisbon weir}
+\NormalTok{rv }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data\_clean/clean\_rv.csv"}\NormalTok{) }\CommentTok{\# rio vista}
+\NormalTok{shw }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data\_clean/clean\_shw.csv"}\NormalTok{) }\CommentTok{\# sherwood harbor}
+\NormalTok{yb }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data\_clean/clean\_yb.csv"}\NormalTok{) }\CommentTok{\# yolo bypass}
+
+\CommentTok{\# integrated data published on EDI ()}
+\FunctionTok{colnames}\NormalTok{(rv)[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"date"}
+
+\NormalTok{rv}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \StringTok{"river\_downstream"}
+\NormalTok{shw}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \StringTok{"river\_upstream"}
+\NormalTok{yb}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \StringTok{"floodplain\_bypass"}
+
+\NormalTok{integrated\_data }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(rv, shw, yb)}
+\NormalTok{integrated\_data }\OtherTok{\textless{}{-}}\NormalTok{ integrated\_data[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{] }\CommentTok{\# group is not needed}
+\NormalTok{integrated\_data}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(integrated\_data}\SpecialCharTok{$}\NormalTok{date)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{f_make}{%
+\subsection{f\_make}\label{f_make}}
+
+The f\_make functions impute missing dates of water temperature data
+when consecutive missing days are less than or equal to one week (seven
+days). Otherwise a linear model is used to estimate water temperature on
+days when data gaps are larger than seven days.
+
+For the Yolo Bypass, the water temperature collected during fish
+sampling is incorporated into the water temperature time series before
+imputation.
+
+\begin{verbatim}
+## Warning: `summarise_each_()` was deprecated in dplyr 0.7.0.
+## Please use `across()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: `funs()` was deprecated in dplyr 0.8.0.
+## Please use a list of either functions or lambdas: 
+## 
+##   # Simple named list: 
+##   list(mean = mean, median = median)
+## 
+##   # Auto named with `tibble::lst()`: 
+##   tibble::lst(mean, median)
+## 
+##   # Using lambdas
+##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 14 x 12
+## # Groups:   region [3]
+##    region   method date_n mean_n max_n min_n  sd_n  cv_n   n_n site_n category_n
+##    <chr>    <chr>   <int>  <int> <int> <int> <int> <int> <int>  <int>      <int>
+##  1 floodpl~ daily~     94     94     0     0     0     0    94     94         94
+##  2 floodpl~ imput~   1285   1285  1285  1285     0     0     0      0       1285
+##  3 floodpl~ lm_lis    415    415   415   415     0     0     0      0        415
+##  4 floodpl~ lm_rv     994    994   994   994     0     0     0      0        994
+##  5 floodpl~ WQ_w_~   1597   1597  1597  1597   838   838  1597   1597       1597
+##  6 floodpl~ ybfmp~   3447   3447  3447  3447  3447  3447  3447   3447       3447
+##  7 floodpl~ <NA>      188      0     0     0     0     0     0      0          0
+##  8 river_d~ imput~     47     47    47    47     0     0     0      0         47
+##  9 river_d~ Pien_~   7576   7576  7576  7576  7576  7576  7576   7576       7576
+## 10 river_u~ daily~     44     44     0     0     0     0    44     44         44
+## 11 river_u~ imput~     10     10     1     1     0     0     0      0         10
+## 12 river_u~ lm_rv    2202   2202  2202  2202     0     0     0      0       2202
+## 13 river_u~ ybfmp~   5454   5454  5454  5454  5454  5454  5454   5454       5454
+## 14 river_u~ <NA>      310      0     0     0     0     0     0      0          0
+## # ... with 1 more variable: length_n <int>
+\end{verbatim}
+
+\hypertarget{clean-data}{%
+\subsection{clean data}\label{clean-data}}
+
+Each clean\_ data set includes columns date, mean, max, min, sd, cv, n,
+method, category, length and site.
+
+\begin{verbatim}
+##   [1] NA                                                
+##   [2] "RIV"                                             
+##   [3] "RVB"                                             
+##   [4] "shw_harbor"                                      
+##   [5] "YB"                                              
+##   [6] "STTD"                                            
+##   [7] "YB,STTD"                                         
+##   [8] "PCS,AL1,BL4,FW1,STTD"                            
+##   [9] "SB1,AL1,YB,STTD"                                 
+##  [10] "BL4,YB,PCS"                                      
+##  [11] "BL4,YB,STTD"                                     
+##  [12] "SB1"                                             
+##  [13] "SB1,YB,STTD"                                     
+##  [14] "FW1,AL1,SB1"                                     
+##  [15] "AL1,STTD"                                        
+##  [16] "YB,BL4,LIS,BL1,AL1,STTD"                         
+##  [17] "YB,AL1,LIS,STTD"                                 
+##  [18] "SB1,BL4,STTD"                                    
+##  [19] "AL1,SB1,YB"                                      
+##  [20] "LIS,STTD"                                        
+##  [21] "FW1,STTD"                                        
+##  [22] "SB1,STTD"                                        
+##  [23] "FW1"                                             
+##  [24] "AL1,BL4,BL2,LIS,STTD"                            
+##  [25] "YB,SB1,STTD"                                     
+##  [26] "BL4,STTD"                                        
+##  [27] "FW1,AL1,BL2,STTD"                                
+##  [28] "YB,BL4,FW1,LIS,AL1,STTD"                         
+##  [29] "YB,FW1"                                          
+##  [30] "BL4"                                             
+##  [31] "YB,BL4,FW1"                                      
+##  [32] "FW1,BL4,YB"                                      
+##  [33] "PCS"                                             
+##  [34] "BL4,YB,FW1,PCS"                                  
+##  [35] "BL4,YB,FW1"                                      
+##  [36] "PCS,STTD"                                        
+##  [37] "FW1,YB,BL4"                                      
+##  [38] "FW1,YB,BL4,PCS"                                  
+##  [39] "BL4,PCS"                                         
+##  [40] "FW1,YB"                                          
+##  [41] "FW1,AL1"                                         
+##  [42] "BL4,LIS,PCS"                                     
+##  [43] "BL4,LIS,YB,FW1,PCS"                              
+##  [44] "BL4,LIS,YB,PCS"                                  
+##  [45] "BL4,LIS,FW1"                                     
+##  [46] "BL4,LIS"                                         
+##  [47] "YB,AL1,FW1"                                      
+##  [48] "BL4,LIS,YB,AL1,FW1"                              
+##  [49] "BL4,YB"                                          
+##  [50] "LIS,PCS"                                         
+##  [51] "LIS,BL2,BL3,BL5,PCS"                             
+##  [52] "BL5,BL4,BL3,BL2,LIS,YB,PCS"                      
+##  [53] "CCS1,CCS2,CCS3,CCS4,PCS"                         
+##  [54] "LIS,BL5,BL3,PCS"                                 
+##  [55] "BL2,YB,PCS"                                      
+##  [56] "YB,PCS"                                          
+##  [57] "BL5,BL3,BL2,LIS,PCS"                             
+##  [58] "BL5,PCS"                                         
+##  [59] "LIS,BL2,BL3,BL4,BL5,PCS"                         
+##  [60] "CCS1,CCS3,PCS"                                   
+##  [61] "CCS2,CCS4,RD22,PCS"                              
+##  [62] "LIS,BL2,BL3,BL4,BL5,YB,PCS"                      
+##  [63] "CCS1,CCS2,PCS"                                   
+##  [64] "CCS1,CCS2,CCS3,CCS4,RD22,BL5,BL4,BL3,BL2,LIS"    
+##  [65] "BL4,LIS,YB"                                      
+##  [66] "CCS1,CCS2,CCS3,CCS4,RD22,BL5,BL4,BL3,BL2"        
+##  [67] "CCS2,CCS3,CCS4,RD22,CCS1,BL5,BL4,BL3,BL2,LIS"    
+##  [68] "YB,LIS,BL4,PCS"                                  
+##  [69] "BL4,LIS,YB,PCS,STTD"                             
+##  [70] "YB,LIS,PCS,STTD"                                 
+##  [71] "YB,BL4,LIS,PCS,STTD"                             
+##  [72] "YB,BL4,LIS,PCS"                                  
+##  [73] "YB,BL4,LIS"                                      
+##  [74] "LIS,BL4,YB"                                      
+##  [75] "YB,BL4,PCS"                                      
+##  [76] "LIS,BL4,YB,PCS"                                  
+##  [77] "LIS,PCS,STTD"                                    
+##  [78] "LIS,BL4,PCS,STTD"                                
+##  [79] "YB,PCS,STTD"                                     
+##  [80] "YB,BL4,PCS,STTD"                                 
+##  [81] "LIS,BL1,BL2,BL3,BL5,AL4,AL3,AL2,AL1"             
+##  [82] "LIS,BL2,BL3,BL5,AL4,AL3,AL2"                     
+##  [83] "LIS,BL1,BL2,BL3,BL4,BL5,AL4,AL3,AL2,AL1"         
+##  [84] "BL5,BL4,BL3,BL2,BL1,LIS,AL1,AL3,AL4"             
+##  [85] "AL1,AL2,AL3,AL4,LIS,BL1,BL2,BL3,BL4,BL5"         
+##  [86] "BL1,BL2,BL3,BL4,BL5,AL4,AL3,AL2,AL1,PCS"         
+##  [87] "LIS,BL5,BL3,BL4,BL2,BL1,AL4,AL3,AL2,AL1,PCS"     
+##  [88] "BL5,BL4,BL3,BL2,BL1,AL4,AL3,AL2,AL1,PCS"         
+##  [89] "AL1,AL2,AL3,BL5,BL4,BL3,BL2,BL1,LIS,PCS"         
+##  [90] "AL2,AL1,AL3,AL4,BL5,BL4,BL3,BL2,BL1,PCS"         
+##  [91] "LIS,BL1,BL2,BL3,BL4,BL5,AL4,AL3,AL2,AL1,PCS,STTD"
+##  [92] "BL5,BL4,BL3,BL2,BL1,LIS,AL4,AL3,AL2,AL1,PCS,STTD"
+##  [93] "BL5,BL4,BL3,BL1,LIS,AL2,AL1,AL3,AL4,PCS,STTD"    
+##  [94] "BL5,BL4,BL3,BL2,BL1,LIS,PCS,STTD"                
+##  [95] "FW1,RD22,YBI80,LIHF,LIHFS,BL1"                   
+##  [96] "FW1,RD22,YBI80,LIHFS,BL1,BL4"                    
+##  [97] "BL1"                                             
+##  [98] "FW1,RD22,YBI80,LIHFS,BL4,BL1"                    
+##  [99] "FW1,RD22,YBI80,LIS,BL4,BL1"                      
+## [100] "FW1,RD22,BL5,LIHF,LIS"                           
+## [101] "BL5,BL4,BL3,BL2,BL1,PCS,STTD"                    
+## [102] "YB,FW1,PCS,STTD"                                 
+## [103] "BL4,BL3,AL4,AL3,AL2,AL1,PCS,STTD"                
+## [104] "BL5,BL4,BL3,BL1,LIS,AL4,AL3,AL2,AL1,PCS,STTD"    
+## [105] "BL5,BL4,BL3,BL2,BL1,LIS,PCS"                     
+## [106] "YB,AL1,AL2,AL3,AL4,BL1,BL5,BL4,BL3,BL2,PCS,STTD" 
+## [107] "YB,BL5,BL4,BL3,BL2,BL1,AL4,AL1,AL2,AL3"          
+## [108] "YB,BL5,BL4,BL3,BL2,BL1,AL1,AL2,AL3,AL4"          
+## [109] "YB,AL1,AL2,AL3,AL4,LIS,BL1,BL2,BL3,BL4,BL5"      
+## [110] "YB,AL2,AL3,AL4,BL1,BL2,BL3,BL4,BL5"              
+## [111] "YB,AL1,AL2,AL3,AL4,BL1,BL2,BL3,BL4,BL5"          
+## [112] "YB,AL1,AL2,AL3,AL4,BL1,BL2,BL3,BL4,BL5,LIS"      
+## [113] "YB,AL1,AL2,AL3,AL4,BL1,BL2,BL3,BL5,PCS"          
+## [114] "AL1,AL3,AL4,BL1,BL2,BL4,BL5,PCS"                 
+## [115] "AL1,AL2,AL3,AL4,BL1,BL2,BL3,BL4,BL5,PCS"         
+## [116] "AL4,PCS"                                         
+## [117] "YB,AL1,AL2,AL3,BL1,BL2,BL3,BL4,BL5,PCS"          
+## [118] "BL5,BL4,BL3,BL2,BL1,AL4,AL3,AL2,AL1,YB,PCS"      
+## [119] "BL5,BL4,PCS"                                     
+## [120] "BL5,BL4,BL3,BL2,BL1,AL4,AL3,AL2,AL1,YB,PCS,STTD" 
+## [121] "AL1,AL2,AL3,AL4,LIS,BL5,BL4,BL3,BL2,BL1,PCS,STTD"
+## [122] "BL1,BL2,BL3,BL4,BL5,AL2,LIS,AL4,AL3,AL1,PCS,STTD"
+## [123] "AL1,LIS,AL2,AL3,AL4,BL5,BL4,BL3,BL2,BL1,PCS,STTD"
+## [124] "AL4,AL3,AL2,AL1,YB,PCS,STTD"                     
+## [125] "LIS,AL4,AL3,AL2,AL1,BL5,BL3,BL2,BL1,YB,PCS,STTD" 
+## [126] "AL1,AL2,AL3,AL4,BL1,BL2,BL3,BL4,BL5,YB,PCS,STTD" 
+## [127] "AL1,AL2,AL3,AL4,BL5,BL4,BL3,BL2,BL1,PCS,STTD"    
+## [128] "AL1,AL2,AL3,AL4,BL5,BL4,BL3,BL2,BL1,YB"          
+## [129] "AL1,AL2,AL3,AL4,BL5,BL4,BL3,BL2,BL1"             
+## [130] "YB,AL1,AL2,AL3,AL4,BL5,BL4,BL3,BL2,BL1"          
+## [131] "AL1,AL2,AL4,BL5,BL4,BL3,BL2,BL1"                 
+## [132] "YB,BL5,BL4,BL3,BL2,BL1,AL4,AL3,AL2,AL1"          
+## [133] "YB,BL5,BL4,BL3,BL2,BL1,AL4,AL2,AL1"              
+## [134] "BL4,BL3,BL2,BL1,AL4,AL3,AL2,AL1,PCS"             
+## [135] "AL1,AL2,AL3,AL4,BL1,BL2,BL3,BL4,PCS"             
+## [136] "AL1,AL2,AL3,AL4,BL4,BL3,BL2,BL1,PCS"             
+## [137] "YB,AL1,AL2,AL4,AL3,PCS"                          
+## [138] "BL4,BL3,BL2,BL1,PCS"                             
+## [139] "FW1,RD22,YBI80,LIHF,BL3"                         
+## [140] "YB,AL1,AL2,AL3,AL4,BL4,BL3,BL2,BL1,PCS"          
+## [141] "YB,AL4,AL3,AL2,AL1"                              
+## [142] "BL4,BL3,BL2,BL1"                                 
+## [143] "BL6,PCS"                                         
+## [144] "BL4,BL3,BL2,BL1,AL4,AL3,AL1,PCS"                 
+## [145] "BL4,BL3,BL2,BL1,AL4,AL3,AL2,PCS"                 
+## [146] "BL5,BL6,PCS"                                     
+## [147] "BL5,BL6,BL4,BL3,BL2,BL1,AL4"                     
+## [148] "AL3,AL2,AL1"                                     
+## [149] "BL2,BL1,AL4,AL3,AL1"                             
+## [150] "BL5,BL6,BL4,BL3"                                 
+## [151] "BL4,BL3,BL2,BL1,AL4,AL3,AL2,AL1"                 
+## [152] "BL5,BL6"                                         
+## [153] "FW1,RD22,YBI80,BL5"                              
+## [154] "BL1,LIHFS,AL4,AL3,AL1"                           
+## [155] "FW1,YBI80,BL5,PCS,STTD"                          
+## [156] "BL5,BL4,BL3,BL2,BL1,AL4,AL3,AL1,PCS,STTD"        
+## [157] "BL5,BL4,BL3,AL4,AL3,PCS,STTD"                    
+## [158] "BL1,BL2,AL1,PCS,STTD"                            
+## [159] "BL4,BL3,BL2,BL1,PCS,STTD"                        
+## [160] "BL5,AL4,AL3,AL1,PCS,STTD"                        
+## [161] "AL4,PCS,STTD"                                    
+## [162] "AL1,AL3,PCS,STTD"                                
+## [163] "FW1,SB2"                                         
+## [164] "BL5,PCS,STTD"                                    
+## [165] "BL4,BL3,BL2,BL1,AL4,AL3,AL1,PCS,STTD"            
+## [166] "BL5,BL4,BL2,BL1,AL4,AL3,AL1,PCS,STTD"            
+## [167] "BL3,PCS,STTD"                                    
+## [168] "BL4,BL5,BL3,AL4,AL3,AL1,PCS,STTD"                
+## [169] "BL1,BL2,PCS,STTD"                                
+## [170] "AL2,PCS,STTD"                                    
+## [171] "AL4,AL3,AL1,PCS,STTD"                            
+## [172] "AL4,AL3,AL1"                                     
+## [173] "BL5,BL4,BL1"                                     
+## [174] "BL3,BL2"                                         
+## [175] "BL1,AL4,AL3,AL1"                                 
+## [176] "BL5,BL4"                                         
+## [177] "BL4,BL3,BL2,BL1,AL4,AL3,AL1"                     
+## [178] "BL5"                                             
+## [179] "AL1,AL3,AL4,BL5,BL4,BL3,BL2,BL1"                 
+## [180] "BL4,BL3,AL4,AL3,AL1"                             
+## [181] "BL2,BL1"                                         
+## [182] "BL5,BL4,BL3,BL2,BL1,AL4,AL3,AL1,PCS"             
+## [183] "AL1,AL3,AL4,BL1,BL3,BL2,BL4,PCS"                 
+## [184] "BL4,BL3,BL2,BL1,AL4,AL3"                         
+## [185] "BL3,BL2,BL1,AL4,AL3,AL1,PCS"                     
+## [186] "AL3,AL1,PCS"                                     
+## [187] "BL1,PCS"                                         
+## [188] "BL1,AL4,AL3,AL1,PCS"                             
+## [189] "BL4,BL3,BL2,PCS"                                 
+## [190] "BL5,BL4,AL4,AL3,AL1,PCS"                         
+## [191] "PCS,BL1,BL2,BL3"                                 
+## [192] "BL5,AL4,AL1"                                     
+## [193] "AL3"                                             
+## [194] "AL1,PCS,STTD"                                    
+## [195] "BL5,AL3,PCS,STTD"                                
+## [196] "FW1,RD22,SB2,YBI80,LIHFS"                        
+## [197] "BL5,BL4,BL3,BL2,BL1,LIHFS,AL3,AL1"               
+## [198] "FW1,SB2,RD22,YBI80"                              
+## [199] "FW1,RD22,SB2,YBI80,LIHFS,AL1,PCS"                
+## [200] "BL5,BL4,BL3,BL2,BL1,AL4,AL3"                     
+## [201] "BL4,BL3,BL2,BL1,STTD"                            
+## [202] "FW1,RD22,SB2,YBI80,LIHFS,AL4,AL3,AL1"            
+## [203] "BL4,BL3,BL2,BL1,LIHFS,PCS,STTD"                  
+## [204] "FW1,SB2,YBI80,AL4,AL3,AL1,PCS,STTD"              
+## [205] "BL5,BL2,BL1,AL4,AL3,AL1,PCS,STTD"                
+## [206] "BL3,LIHFS,PCS,STTD"                              
+## [207] "BL5,BL4,BL3,BL2,BL1,LIHFS,AL4,PCS,STTD"          
+## [208] "FW1,SB2,YBI80,PCS,STTD"                          
+## [209] "AL3,AL1,PCS,STTD"                                
+## [210] "BL3,BL2,AL4,AL3,PCS"                             
+## [211] "BL5,BL4,BL1,PCS"                                 
+## [212] "FW1,SB2,BL5,LIHFS,AL1,PCS,STTD"                  
+## [213] "FW1,RD22,SB2,YBI80,STTD"                         
+## [214] "BL4,BL3,BL2,PCS,STTD"                            
+## [215] "BL1,LIHFS,AL4,PCS,STTD"                          
+## [216] "AL1,AL2,AL3,LIHFS,PCS,STTD"                      
+## [217] "BL5,BL4,BL1,PCS,STTD"                            
+## [218] "BL2,PCS,STTD"                                    
+## [219] "BL3,BL2,BL1,PCS,STTD"                            
+## [220] "BL4,AL4,PCS,STTD"                                
+## [221] "BL1,BL2,BL3,BL4,PCS,STTD"                        
+## [222] "AL1,AL3,AL4,BL1,PCS,STTD"                        
+## [223] "BL3,BL4,BL5,PCS,STTD"                            
+## [224] "BL5,BL1,AL4,AL3,AL1"                             
+## [225] "BL4,BL3,BL2"                                     
+## [226] "BL3,BL2,BL1,AL4,AL3,AL1"                         
+## [227] "AL1,AL3,AL4,BL1,BL2,BL3"                         
+## [228] "AL1,AL3,BL4,BL3,BL2,BL1,AL4"                     
+## [229] "AL4,BL1,BL2,BL3,BL4,AL3,AL1"                     
+## [230] "AL1,AL3,AL4,BL1,BL2,PCS"                         
+## [231] "BL4,BL3,PCS"                                     
+## [232] "BL2,BL3,BL4,BL1,AL3,AL1,PCS,AL4"                 
+## [233] "AL1,AL3,AL4,BL1,BL3,BL2,PCS"                     
+## [234] "AL1,AL3,BL1,PCS"                                 
+## [235] "BL4,BL3,BL2,AL4,PCS"                             
+## [236] "AL1,AL3,AL4,BL1,PCS"
+\end{verbatim}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'site'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 395 x 3
+## # Groups:   site [236]
+##    site                                            year  total
+##    <chr>                                           <chr> <int>
+##  1 AL1,AL2,AL3,AL4,BL1,BL2,BL3,BL4,BL5,PCS         2011      1
+##  2 AL1,AL2,AL3,AL4,BL1,BL2,BL3,BL4,BL5,YB,PCS,STTD 2012      1
+##  3 AL1,AL2,AL3,AL4,BL1,BL2,BL3,BL4,PCS             2012      1
+##  4 AL1,AL2,AL3,AL4,BL1,BL2,BL3,BL4,PCS             2016      1
+##  5 AL1,AL2,AL3,AL4,BL4,BL3,BL2,BL1,PCS             2012      1
+##  6 AL1,AL2,AL3,AL4,BL4,BL3,BL2,BL1,PCS             2015      1
+##  7 AL1,AL2,AL3,AL4,BL5,BL4,BL3,BL2,BL1             2012      1
+##  8 AL1,AL2,AL3,AL4,BL5,BL4,BL3,BL2,BL1,PCS,STTD    2012      2
+##  9 AL1,AL2,AL3,AL4,BL5,BL4,BL3,BL2,BL1,YB          2012      1
+## 10 AL1,AL2,AL3,AL4,LIS,BL1,BL2,BL3,BL4,BL5         2010      1
+## # ... with 385 more rows
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 8 x 12
+## # Groups:   category [4]
+##   category method    date_n mean_n max_n min_n  sd_n  cv_n   n_n site_n length_n
+##   <chr>    <chr>      <int>  <int> <int> <int> <int> <int> <int>  <int>    <int>
+## 1 7&Under  imputeTS    1342   1342  1333  1333     0     0     0      0     1342
+## 2 data     daily_me~    138    138     0     0     0     0   138    138        0
+## 3 data     Pien_2020   7576   7576  7576  7576  7576  7576  7576   7576        0
+## 4 data     WQ_w_fish   1597   1597  1597  1597   838   838  1597   1597        0
+## 5 data     ybfmp_lo~   8901   8901  8901  8901  8901  8901  8901   8901        0
+## 6 Over7    lm_lis       415    415   415   415     0     0     0      0      415
+## 7 Over7    lm_rv       3196   3196  3196  3196     0     0     0      0     3196
+## 8 <NA>     <NA>         498      0     0     0     0     0     0      0      498
+## # ... with 1 more variable: region_n <int>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(length, na.rm = TRUE): no non-missing arguments to max; returning
+## -Inf
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+
+## Warning in min(length, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf
+\end{verbatim}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'region'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\includegraphics{setup_files/figure-latex/f_clean-1.pdf}
+
+\end{document}
