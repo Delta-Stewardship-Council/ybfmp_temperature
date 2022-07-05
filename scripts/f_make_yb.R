@@ -30,7 +30,7 @@ f_get_hourly <- function() {
 
     yb_master_dup <- subset(yb_master, drop == 0)
 
-    yb_master_dup <- yb_master_dup[,-c(10:14)]
+    yb_master_dup <- yb_master_dup[,-c(11:14)]
 
     write.csv(yb_master_dup, "data_clean/yb_98_18_daily_combo.csv")
 
@@ -130,7 +130,7 @@ f_get_hourly <- function() {
       mutate(pred_mean = predict(fit_rv_mean, .), pred_max = predict(fit_rv_max, .), pred_min = predict(fit_rv_min, .))
 
   # add predictions
-    imput_dat_Over7 <- imput_dat_Over7[,-c(13:15)]
+    imput_dat_Over7 <- imput_dat_Over7[,-c(14:16)]
     imput_dat_Over7_rv <- merge(imput_dat_Over7, rv_fill[,c(1,8:10)], by = "date", all = TRUE)
 
     imput_dat_Over7_rv$method <- ifelse(is.na(imput_dat_Over7_rv$mean) & !is.na(imput_dat_Over7_rv$pred_mean), "lm_rv", imput_dat_Over7_rv$method)
@@ -141,6 +141,7 @@ f_get_hourly <- function() {
 
 
     sum(is.na(imput_dat_Over7_rv$mean)) # still 188
+
 
     write.csv(imput_dat_Over7_rv[,c(1:10,12)], "data_clean/clean_yb.csv", row.names = FALSE)
     }
