@@ -142,6 +142,11 @@ f_get_hourly <- function() {
 
     sum(is.na(imput_dat_Over7_rv$mean)) # still 188
 
+  # cant fill NAs greater than seven before 1999-02-17 (no rv data either)
+    imput_dat_Over7_rv$method <- ifelse(is.na(imput_dat_Over7_rv$mean) == TRUE,
+                                     NA, imput_dat_Over7_rv$method)
+    imput_dat_Over7_rv$category <- ifelse(is.na(imput_dat_Over7_rv$mean) == TRUE,
+                                       NA, imput_dat_Over7_rv$category)
 
     write.csv(imput_dat_Over7_rv[,c(1:11,13)], "data_clean/clean_yb.csv", row.names = FALSE)
     }
