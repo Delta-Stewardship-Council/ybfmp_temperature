@@ -143,7 +143,7 @@ f_get_hourly <- function() {
     sum(is.na(imput_dat_Over7_rv$mean)) # still 188
 
 
-    write.csv(imput_dat_Over7_rv[,c(1:10,12)], "data_clean/clean_yb.csv", row.names = FALSE)
+    write.csv(imput_dat_Over7_rv[,c(1:11,13)], "data_clean/clean_yb.csv", row.names = FALSE)
     }
 
 
