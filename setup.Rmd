@@ -97,3 +97,60 @@ plot(plot_data$year, plot_data$max,
 legend("topright", c("river_upstream", "floodplain_bypass", "river_downstream"), col = c("#000075", "#3cb44b", "#911eb4"), pch = 16)
 
 ```
+
+
+```{r qc plots, echo=FALSE}
+
+integrated_data <- within(integrated_data, year <- format(integrated_data$date, "%Y"))
+
+for(i in unique(integrated_data$year)){
+
+    temp_dat <- integrated_data[integrated_data$year == i,]
+
+    #mypath <- file.path("qc/", file.name = paste("qc_plot_", i, ".png", sep = ""))
+    #png(file = mypath, width = 960, height = 480)
+
+    plot(temp_dat$date, temp_dat$mean,
+         col = ifelse(temp_dat$region == "river_downstream",'#469990', ifelse(temp_dat$region == "river_upstream", '#f032e6', '#BABABA')), pch = 2, xlab = "Date", ylab = "", yaxt="n", ylim = c(0,30))
+    
+    legend("topright", c(paste("Year", i, sep = " "), "river_downstream", "river_upstream", "floodplain_bypass", "mean", "max", "min"), pch = c(15, 15, 15, 15, 2, 1, 5), col = c('#FFFFFF', '#469990', '#f032e6', '#BABABA', '#404040', '#404040', '#404040'), bty ="n")
+
+    par(new = TRUE)
+
+    plot(temp_dat$date, temp_dat$max,
+         col = ifelse(temp_dat$region == "river_downstream",'#469990', ifelse(temp_dat$region == "river_upstream", '#f032e6', '#BABABA')), pch = 1, xlab = "Date", ylab = "", yaxt="n", ylim = c(0,30))
+    
+    par(new = TRUE)
+
+    plot(temp_dat$date, temp_dat$min,
+         col = ifelse(temp_dat$region == "river_downstream",'#469990', ifelse(temp_dat$region == "river_upstream", '#f032e6', '#BABABA')), pch = 5, xlab = "Date", ylab = "Temperature (°C)", ylim = c(0,30))
+
+    #dev.off()
+
+    par(new = FALSE)
+}
+
+# 2013 loosk wrong
+colnames(lis)[2] <- "date"
+lis$region <- "lis"
+integrated_data_v2 <- rbind(rv, shw, yb, lis)
+
+integrated_data_v2$date <- as.Date(integrated_data_v2$date)
+integrated_data_v2 <- within(integrated_data_v2, year <- format(integrated_data_v2$date, "%Y"))
+
+dat_2013 <- subset(integrated_data_v2, year =="2013")
+unique(dat_2013$method)
+
+method <- c("Pien_2020", "ybfmp_logger", "imputeTS", "WQ_w_fish")
+pch <- c(0, 2, 1, 6)
+
+pch_dat <- data.frame(method, pch)
+
+dat_2013 <- merge(dat_2013, pch_dat, by = "method")
+
+plot(dat_2013$date, dat_2013$min,
+         col = ifelse(dat_2013$region == "river_downstream",'#469990', 
+                      ifelse(dat_2013$region == "river_upstream", '#f032e6', ifelse(dat_2013$region == "floodplain_bypass", '#BABABA', '#404040' ))), pch = dat_2013$pch, xlab = "Date", ylab = "Temperature (°C)", ylim = c(0,30))
+
+```
+
