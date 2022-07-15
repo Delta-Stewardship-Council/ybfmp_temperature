@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Integrate data
 
 ```{r data}
 lis <- read.csv("data_clean/clean_lis.csv") # lisbon weir
@@ -30,6 +30,8 @@ integrated_data <- integrated_data[,-1] # group is not needed
 
 integrated_data$date <- as.Date(integrated_data$date)
 ```
+
+## QC plots
 
 ```{r qc plots, echo=FALSE}
 
@@ -63,6 +65,11 @@ for(i in unique(integrated_data$year)){
 }
 
 # 2013 looks wrong (maybe 2007 too?)
+```
+
+## 2013
+
+```{r 2007, echo=FALSE}
 colnames(lis)[2] <- "date"
 lis$region <- "lis"
 integrated_data_v2 <- rbind(rv, shw, yb, lis)
@@ -87,6 +94,8 @@ plot(dat_2013$date, dat_2013$min,
 # need to substitute Lisbon Weir  data for 2013 (YBFMP logger data looks incorrect)
 ```
 
+## LIS
+
 ```{r check lis, echo=FALSE}
 lis$date <- as.Date(lis$date)
 lis <- within(lis, year <- format(lis$date, "%Y"))
@@ -96,3 +105,28 @@ lis_2013 <- subset(lis, year =="2013")
 colSums(is.na(dat_2013)) # good to go
 
 ```
+
+## 2007
+
+```{r 2007, echo=FALSE}
+dat_2007 <- subset(integrated_data, year =="2007")
+
+dat_2007 <- merge(dat_2007, pch_dat, by = "method")
+
+plot(dat_2007$date, dat_2007$min,
+         col = ifelse(dat_2007$region == "river_downstream",'#469990', 
+                      ifelse(dat_2007$region == "river_upstream", '#f032e6', ifelse(dat_2007$region == "floodplain_bypass", '#BABABA', '#404040' ))), pch = dat_2007$pch, xlab = "Date", ylab = "Temperature (°C)", ylim = c(0,30))
+
+# problem is the logger data again, but upstream 
+shw <- within(shw, year <- format(shw$date, "%Y"))
+head(shw)
+
+shw_2007 <- subset(shw, year =="2007")
+plot(shw_2007$date, shw_2007$mean)
+
+# 2007-10-31 to 2007-11-27
+
+# this will be fixed pre integration, changes made in f_make_shw.R July 2022
+
+```
+
