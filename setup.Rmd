@@ -21,14 +21,16 @@ Within the data_clean folder, the raw (years combined) temperature logger data f
 The f_get functions bring in the raw data from the data_raw folder and relevant EDI publications. The clean_ data is the final daily water temperature data for each location.
 
 ```{r data}
+# clean data
 lis <- read.csv("data_clean/clean_lis.csv") # lisbon weir
 rv <- read.csv("data_clean/clean_rv.csv") # rio vista
 shw <- read.csv("data_clean/clean_shw.csv") # sherwood harbor
 yb <- read.csv("data_clean/clean_yb.csv") # yolo bypass
 
-# integrated data published on EDI ()
-colnames(lis)[2] <- "date"
 colnames(rv)[2] <- "date"
+
+# need to switch yb for lis in 2013 (see qc_plots.Rmd for explanation)
+colnames(lis)[2] <- "date"
 
 lis$date <- as.Date(lis$date)
 rv$date <- as.Date(rv$date)
@@ -43,9 +45,13 @@ yb_qc <- subset(yb, year != "2013")
 
 yb_reviewed <- rbind(lis_qc, yb_qc)
 
+# assign each data frame a region
+
 rv$region <- "river_downstream"
 shw$region <- "river_upstream"
 yb_reviewed$region <- "floodplain_bypass"
+
+# integration (published on EDI)
 
 integrated_data <- rbind(rv, shw, yb_reviewed[,-13])
 integrated_data <- integrated_data[,-1] # group is not needed

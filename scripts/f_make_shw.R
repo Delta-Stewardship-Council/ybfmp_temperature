@@ -8,8 +8,10 @@ library(imputeTS)
 
 f_make_shw <- function() {
   # data
-    shw_98_20 <- read.csv("data_clean/shw_98_18.csv")
+    shw_98_20 <- read.csv("data_clean/shw_98_20.csv")
     rv <- read.csv("data_clean/clean_rv.csv")
+
+    shw_98_20$date <- as.Date(shw_98_20$date)
 
   # summarize (true) interval (e.g., how many measurements per day)
     shw_daily <- shw_98_20 %>%
@@ -30,7 +32,7 @@ f_make_shw <- function() {
     # add data description columns
     shw_daily <- transform(shw_daily, method = ifelse(n > 1, "ybfmp_logger", "daily_mean"))
     shw_daily$category <- "data"
-    shw_daily$site <- "shw_harbor"
+    shw_daily$site <- "SHR"
 
     # need to pull out max and min that doesn't apply
     shw_daily$max <- ifelse(shw_daily$method == "daily_mean", "NA", shw_daily$max)
@@ -38,15 +40,21 @@ f_make_shw <- function() {
 
     write.csv(shw_daily, "data_clean/SHWharbor_98_20_daily_logger.csv", row.names = FALSE)
 
+    # need to remove suspect dates (2017-12-14) and 2007-10-31 to 2007-11-27 (see qc_plots.Rmd)
+
+    shw_daily_qc <- subset(shw_daily, date != as.Date("2017-12-14"))
+    exclude = seq(as.Date('2007-10-31'),as.Date('2007-11-27'),by='day')
+    shw_daily_qc = shw_daily_qc[!(shw_daily_qc$date %in% exclude), ]
+
     # impute NAs within seven days of consecutive NAs
     continous_dates <- data.frame (x = 1:8020, date = seq(as.Date('1998-01-16'),as.Date('2019-12-31'),by='day')) # missing 397 days in 1998
-    shw_daily$date <- as.Date(shw_daily$date)
-    shw_cont <- merge(shw_daily, continous_dates, by = "date", all.y = TRUE)
+
+    shw_cont <- merge(shw_daily_qc, continous_dates, by = "date", all.y = TRUE)
 
     # separate
     shw_cont_data <- shw_cont[!is.na(shw_cont$mean),]
     shw_cont_NA <- shw_cont[is.na(shw_cont$mean),]
-    head(shw_cont_NA) # 2522 days
+    head(shw_cont_NA) # 2521 days
 
     # assigns id to consecutive date groups
     shw_cont_NA$group <- cumsum(c(1, diff.Date(shw_cont_NA$date)) >= 2)
@@ -88,9 +96,9 @@ f_make_shw <- function() {
     dat4model_na <- na.omit(dat4model)
 
     # lm
-    fit_mean <- lm(shw_mean~mean, data = dat4model_na)# Adjusted R-squared:  0.9562
-    fit_max <- lm(shw_max~max, data = dat4model_na)# Adjusted R-squared: 0.9497
-    fit_min <- lm(shw_min~min, data = dat4model_na)# Adjusted R-squared:  0.9544
+    fit_mean <- lm(shw_mean~mean, data = dat4model_na)# Adjusted R-squared:  0.9745
+    fit_max <- lm(shw_max~max, data = dat4model_na)# Adjusted R-squared: 0.9691
+    fit_min <- lm(shw_min~min, data = dat4model_na)# Adjusted R-squared:  0.9713
 
     df_fill <- dat4model %>%
       mutate(pred_mean = predict(fit_mean, .), pred_max = predict(fit_max, .), pred_min = predict(fit_min, .))
@@ -116,3 +124,11 @@ f_make_shw <- function() {
 
     write.csv(imput_dat_Over7, "data_clean/clean_shw.csv", row.names = FALSE)
 }
+
+# double checking...
+
+imput_dat_Over7 <- within(imput_dat_Over7, year <- format(imput_dat_Over7$date, "%Y"))
+head(imput_dat_Over7)
+
+shw_2007 <- subset(imput_dat_Over7, year =="2007")
+plot(shw_2007$date, shw_2007$mean)
