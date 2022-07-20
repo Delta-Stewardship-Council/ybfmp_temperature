@@ -113,7 +113,7 @@ plot(plot_data$year, plot_data$max,
      xlab = "Year",
      ylab = "Max length",
      main = "Max consecutive missing dates per Year")
-legend("topright", c("river_upstream", "floodplain_bypass", "river_downstream"), col = c("#000075", "#3cb44b", "#911eb4"), pch = 16)
+legend("topright", c("Sacramento River - upstream", "Floodplain-bypass", "Sacramento River - downstream"), col = c("#000075", "#3cb44b", "#911eb4"), pch = 16)
 
 ```
 
